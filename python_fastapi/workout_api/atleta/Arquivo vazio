@@ -1,0 +1,6 @@
+OBJS = $(SRCS:$(SRCDIR)/%.c=%.o)
+BONUS_OBJS = $(BONUS_SRCS:$(SRCDIR)/%.c=%.o)
+
+ifeq ($(findstring bonus, $(MAKECMDGOALS)),bonus)
+	OBJS += $(BONUS_OBJS)
+endif
