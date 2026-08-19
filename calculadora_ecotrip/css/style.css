@@ -1,0 +1,81 @@
+/* css/style.css */
+
+/* Paleta inspirada na DIO */
+:root {
+  --bg-color: #121212;
+  --primary-color: #7C3AED;
+  --secondary-color: #9333EA;
+  --text-color: #FFFFFF;
+  --highlight-color: #00FFFF; /* Ciano */
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  color: var(--primary-color);
+  font-size: 2.0rem; /* Reduzido de 2.2rem para 2.0rem */
+}
+
+label {
+  font-weight: bold;
+}
+
+input, .form-check-label {
+  color: var(--text-color);
+}
+
+/* CAMPOS DE ENTRADA (Caixa de Texto) */
+.form-control {
+  background-color: #202020; 
+  border: 1px solid var(--secondary-color);
+  color: var(--text-color);
+}
+
+/* Garante que o placeholder (texto de exemplo) também seja visível */
+.form-control::placeholder {
+    color: #999999; 
+    opacity: 1; 
+}
+
+/* Estilo em foco */
+.form-control:focus {
+  background-color: #202020; 
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.25);
+}
+
+
+.form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border: none;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+}
+
+/* NOVO ESTILO PARA O PAINEL DE RESULTADOS */
+.resultado-panel {
+    background-color: #1F1F1F; 
+    border: 1px solid var(--secondary-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    font-size: 0.9em; 
+}
+
+/* Cor do texto dos resultados (distância, emissão, custo) */
+.resultado-text {
+  color: var(--highlight-color); 
+  font-size: 1.1em; /* Reduzido de 1.2em para 1.1em */
+  font-weight: bold;
+  margin-bottom: 0;
+}
