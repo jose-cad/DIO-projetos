@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Senha123
+      MYSQL_DATABASE: meubanco
+    volumes:
+      - ./banco.sql:/docker-entrypoint-initdb.d/banco.sql
+    networks:
+      - br-network
+
+  php-app-1: &php-template
+    build:
+      context: .
+      dockerfile: dockerfile.php
+    volumes:
+      - .:/var/www/html
+    networks:
+      - br-network
+    depends_on:
+      - db
+
+  php-app-2:
+    <<: *php-template
+
+  php-app-3:
+    <<: *php-template
+
+  nginx-lb:
+    build:
+      context: .
+      dockerfile: dockerfile.nginx
+    ports:
+      - "4500:4500"
+    networks:
+      - br-network
+    depends_on:
+      - php-app-1
+      - php-app-2
+      - php-app-3
+
+networks:
+  br-network:
+    driver: bridge
