@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="TestesUnitarios.Desafio.Console/TestesUnitarios.Desafio.Console.csproj" />
+  <Project Path="TestesUnitarios.Desafio.Tests/TestesUnitarios.Desafio.Tests.csproj" />
+</Solution>
