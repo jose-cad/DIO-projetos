@@ -1,0 +1,24 @@
+# Compose V2 não exige mais o campo "version" (obsoleto desde 2023).
+# https://docs.docker.com/compose/compose-file/#version-top-level-element-obsolete
+
+services:
+  apache:
+    image: httpd:2.4-alpine        # imagem pinada e enxuta (Alpine), evite "latest" em produção
+    container_name: apache-web-app
+    restart: unless-stopped         # reinicia sozinho em caso de falha/reboot do host
+    ports:
+      - "8080:80"                   # evita conflito com serviços que já usam a porta 80 do host
+    volumes:
+      - ./website:/usr/local/apache2/htdocs:ro   # :ro -> somente leitura dentro do container
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
