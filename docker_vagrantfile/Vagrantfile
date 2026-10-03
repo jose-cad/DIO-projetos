@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Cluster Docker Swarm local: 1 manager (master) + 3 workers (node01..03)
+SUBNET = "10.10.10"
+
+machines = {
+  "master" => { "memory" => 1024, "cpus" => 1, "ip" => 100 },
+  "node01" => { "memory" => 1024, "cpus" => 1, "ip" => 101 },
+  "node02" => { "memory" => 1024, "cpus" => 1, "ip" => 102 },
+  "node03" => { "memory" => 1024, "cpus" => 1, "ip" => 103 }
+}
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04" # Ubuntu 24.04 LTS
+  config.vm.box_check_update = false
+
+  machines.each do |name, conf|
+    config.vm.define name do |machine|
+      machine.vm.hostname = name
+      machine.vm.network "private_network", ip: "#{SUBNET}.#{conf["ip"]}"
+
+      machine.vm.provider "virtualbox" do |vb|
+        vb.name = name
+        vb.memory = conf["memory"]
+        vb.cpus = conf["cpus"]
+        vb.linked_clone = true # clona a box base: sobe mais rápido e ocupa menos disco
+      end
+
+      # 1) Docker pré-instalado em todas as VMs
+      machine.vm.provision "shell", path: "docker.sh"
+
+      # 2) master inicia o Swarm; os demais entram como workers
+      if name == "master"
+        machine.vm.provision "shell", path: "master.sh", args: ["#{SUBNET}.#{conf["ip"]}"]
+      else
+        machine.vm.provision "shell", path: "worker.sh"
+      end
+    end
+  end
+end
