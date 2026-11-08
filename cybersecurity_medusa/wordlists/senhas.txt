@@ -1,0 +1,14 @@
+msfadmin
+password
+123456
+admin
+root
+service
+postgres
+user
+toor
+12345
+abc123
+pass
+test
+guest

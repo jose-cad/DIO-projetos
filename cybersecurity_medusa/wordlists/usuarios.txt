@@ -1,0 +1,8 @@
+msfadmin
+service
+postgres
+user
+sys
+klog
+root
+admin
